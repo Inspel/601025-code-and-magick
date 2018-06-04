@@ -10,6 +10,8 @@ var FONT_GAP = 15;
 var BAR_WIDTH = 40;
 var BAR_HEIGHT_MAX = -150;
 var introText = ['Ура вы победили!', 'Список результатов:'];
+var randMin = 20;
+var randMax = 100;
 
 var renderCloud = function (ctx, x, y, color) {
   ctx.fillStyle = color;
@@ -64,7 +66,7 @@ window.renderStatistics = function (ctx, players, times) {
 
   for (var i = 0; i < players.length; i++) {
     var barHeight = BAR_HEIGHT_MAX * playerTimes[i] / maxTime;
-    var blue = getRandomInteger(20, 100);
+    var blue = getRandomInteger(randMin, randMax);
     ctx.fillStyle = 'hsl(240,' + blue + '%, 50%)';
     if (players[i] === 'Вы') {
       ctx.fillStyle = 'rgba( 255, 0, 0, 1)';

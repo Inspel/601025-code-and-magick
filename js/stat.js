@@ -37,7 +37,7 @@ var getRoundTimes = function (arr) {
 var getMaxElement = function (arr) {
   var maxElement = arr[0];
 
-  for (var i = 0; i < arr.length; i++) {
+  for (var i = 1; i < arr.length; i++) {
     if (arr[i] > maxElement) {
       maxElement = arr[i];
     }
@@ -61,12 +61,6 @@ window.renderStatistics = function (ctx, players, times) {
   var playerTimes = getRoundTimes(times);
 
   var maxTime = getMaxElement(playerTimes);
-
-  if (players.length > times.length) {
-    players.length = times.length;
-  } else {
-    times.length = players.length;
-  }
 
   for (var i = 0; i < players.length; i++) {
     var barHeight = BAR_HEIGHT_MAX * playerTimes[i] / maxTime;

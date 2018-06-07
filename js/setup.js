@@ -10,6 +10,9 @@ var EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var wizards = [];
 
+var userDialog = document.querySelector('.setup');
+userDialog.classList.remove('hidden');
+
 var getRandomInteger = function (min, max) {
   var random = min + Math.random() * (max + 1 - min);
   random = Math.floor(random);
@@ -34,30 +37,32 @@ var generateWizards = function () {
   return wizards;
 };
 
+var insertElements = function () {
+
+  var similarListElement = document.querySelector('.setup-similar-list');
+
+  var similarWizardTemplate = document.querySelector('#similar-wizard-template')
+    .content
+    .querySelector('.setup-similar-item');
+
+  var fragment = document.createDocumentFragment();
+
+  for (var i = 0; i < 4; i++) {
+    var wizardElement = similarWizardTemplate.cloneNode(true);
+
+    wizardElement.querySelector('.setup-similar-label').textContent = wizards[i].name;
+    wizardElement.querySelector('.wizard-coat').style
+      .fill = wizards[i].coatColor;
+    wizardElement.querySelector('.wizard-eyes').style
+      .fill = wizards[i].eyeColor;
+
+    fragment.appendChild(wizardElement);
+  }
+  similarListElement.appendChild(fragment);
+};
+
 generateWizards();
 
-var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
-
-var similarListElement = document.querySelector('.setup-similar-list');
-
-var similarWizardTemplate = document.querySelector('#similar-wizard-template')
-  .content
-  .querySelector('.setup-similar-item');
-
-var fragment = document.createDocumentFragment();
-
-for (var i = 0; i < 4; i++) {
-  var wizardElement = similarWizardTemplate.cloneNode(true);
-
-  wizardElement.querySelector('.setup-similar-label').textContent = wizards[i].name;
-  wizardElement.querySelector('.wizard-coat').style
-    .fill = wizards[i].coatColor;
-  wizardElement.querySelector('.wizard-eyes').style
-    .fill = wizards[i].eyeColor;
-
-  fragment.appendChild(wizardElement);
-}
-similarListElement.appendChild(fragment);
+insertElements();
 
 document.querySelector('.setup-similar').classList.remove('hidden');

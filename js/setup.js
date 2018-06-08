@@ -20,7 +20,7 @@ var getRandomInteger = function (min, max) {
 };
 
 var getRndProperty = function (arr) {
-  var rndIndex = getRandomInteger(0, arr.length);
+  var rndIndex = getRandomInteger(0, arr.length - 1);
   return arr[rndIndex];
 };
 

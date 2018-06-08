@@ -1,14 +1,12 @@
 'use strict';
 
 var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'Кристоф', 'Виктор', 'Юлия', 'Люпита', 'Вашингтон'];
-
 var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
-
 var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
-
 var EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
 
 var wizards = [];
+var quantity = 4;
 
 var userDialog = document.querySelector('.setup');
 userDialog.classList.remove('hidden');
@@ -24,9 +22,9 @@ var getRndProperty = function (arr) {
   return arr[rndIndex];
 };
 
-var generateWizards = function () {
+var generateWizards = function (wizardsQuantity) {
   var newWizard;
-  for (var i = 0; i < 4; i++) {
+  for (var i = 0; i < wizardsQuantity; i++) {
     newWizard = {
       name: getRndProperty(WIZARD_NAMES) + ' ' + getRndProperty(WIZARD_SURNAMES),
       coatColor: getRndProperty(COAT_COLORS),
@@ -37,18 +35,16 @@ var generateWizards = function () {
   return wizards;
 };
 
-var insertElements = function () {
+var createSimilarElements = function (templateQueryString, contentQueryString, elementsQuantity) {
 
-  var similarListElement = document.querySelector('.setup-similar-list');
-
-  var similarWizardTemplate = document.querySelector('#similar-wizard-template')
+  var template = document.querySelector(templateQueryString)
     .content
-    .querySelector('.setup-similar-item');
+    .querySelector(contentQueryString);
 
   var fragment = document.createDocumentFragment();
 
-  for (var i = 0; i < 4; i++) {
-    var wizardElement = similarWizardTemplate.cloneNode(true);
+  for (var i = 0; i < elementsQuantity; i++) {
+    var wizardElement = template.cloneNode(true);
 
     wizardElement.querySelector('.setup-similar-label').textContent = wizards[i].name;
     wizardElement.querySelector('.wizard-coat').style
@@ -58,11 +54,15 @@ var insertElements = function () {
 
     fragment.appendChild(wizardElement);
   }
-  similarListElement.appendChild(fragment);
+  return fragment;
 };
 
-generateWizards();
+generateWizards(quantity);
 
-insertElements();
+var newFragment = createSimilarElements('#similar-wizard-template', '.setup-similar-item', quantity);
+
+var similarListElement = document.querySelector('.setup-similar-list');
+
+similarListElement.appendChild(newFragment);
 
 document.querySelector('.setup-similar').classList.remove('hidden');

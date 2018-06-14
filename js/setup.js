@@ -4,12 +4,64 @@ var WIZARD_NAMES = ['Иван', 'Хуан Себастьян', 'Мария', 'К
 var WIZARD_SURNAMES = ['да Марья', 'Верон', 'Мирабелла', 'Вальц', 'Онопко', 'Топольницкая', 'Нионго', 'Ирвинг'];
 var COAT_COLORS = ['rgb(101, 137, 164)', 'rgb(241, 43, 107)', 'rgb(146, 100, 161)', 'rgb(56, 159, 117)', 'rgb(215, 210, 55)', 'rgb(0, 0, 0)'];
 var EYES_COLOR = ['black', 'red', 'blue', 'yellow', 'green'];
+var ESC_KEYCODE = 27;
+var ENTER_KEYCODE = 13;
 
 var wizards = [];
 var quantity = 4;
 
 var userDialog = document.querySelector('.setup');
-userDialog.classList.remove('hidden');
+
+var setupOpen = document.querySelector('.setup-open');
+
+var setupClose = userDialog.querySelector('.setup-close');
+
+var openPopup = function () {
+  userDialog.classList.remove('hidden');
+  document.addEventListener('keydown', onPopupEscPress);
+};
+
+var closePopup = function () {
+  userDialog.classList.add('hidden');
+  document.removeEventListener('keydown', onPopupEscPress);
+};
+
+var onPopupEscPress = function (evt) {
+  if (evt.keyCode === ESC_KEYCODE) {
+    closePopup();
+  }
+};
+
+var userNameInput = userDialog.querySelector('.setup-user-name');
+
+setupOpen.addEventListener('click', function () {
+  openPopup();
+});
+
+setupOpen.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    openPopup();
+  }
+});
+
+setupClose.addEventListener('click', function () {
+  closePopup();
+});
+
+setupClose.addEventListener('keydown', function (evt) {
+  if (evt.keyCode === ENTER_KEYCODE) {
+    closePopup();
+  }
+});
+
+userNameInput.addEventListener('focus', function () {
+  if (userNameInput.onfocus) {
+    document.removeEventListener('keydown', onPopupEscPress);
+  }
+  if (userNameInput.onblur) {
+    document.addEventListener('keydown', onPopupEscPress);
+  }
+});
 
 var getRandomInteger = function (min, max) {
   var random = min + Math.random() * (max + 1 - min);

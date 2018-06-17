@@ -25,7 +25,7 @@ var wizardEyes = userDialog.querySelector('.wizard-eyes');
 
 var wizardFireball = userDialog.querySelector('.setup-fireball-wrap');
 
-var wizardForm = document.querySelector('setup-wizard-form');
+var wizardForm = document.querySelector('.setup-wizard-form');
 
 var openPopup = function () {
   userDialog.classList.remove('hidden');
